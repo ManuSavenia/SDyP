@@ -74,3 +74,45 @@ Si
 𝐵
 𝑆
 BS es demasiado pequeño, el overhead de los bucles reduce la ventaja del método.
+
+
+2) Tarda mucho mas el recursivo ya que tiene que usar el stack y hacer llamados una y otra vez, ocupando
+mucha memoria cache (para guardar direcciones de regreso), mientras que el iterativo simplemente utilizan
+datos simples y de facil Almacenamiento.
+
+3)Con numeros pequenios no hay muchas diferencia pero al aumentar el N, se nota que se toma mas tiempo almacenando
+valores en el Registro intermedio que en el Sin Registro el cual hace calculos directos, por lo que usa menos memoria cache.
+
+4)a) Mientras mas grande los vectores, mas se igualan los promedios. Si los valores fuesen potencias de 2 se harian mas rapido.
+
+b) Tambien, mientras mas se ejecuta y mas grande N, mas parejos los tiempos.
+
+c) Usando la equivalencia se tarda mucho menos (menos logica para ewl procesador y menos datos en la cache)
+
+
+5)a)Es mas rapida la opcion que usa *p
+
+b) Porque ocurre un Overflow en sum. Para solucionar esto usario "unsigned long long"
+
+
+6) La primera opcion tiene 2 ifs anidados (tarda mucho), la segunda tiene 2 ifs individuales (tarda un poco menos) y la tercera 
+opcion tiene 1 if solo, por lo que tarda menos que el resto.
+
+
+7) Mientras mas cantidad de informacion requiera la variable, mas tiempo se va a tardar en procesarla,
+por ende INT tarda menos, le sigue FLOAT y por ultimo DOUBLE.
+
+
+8) Este algoritmo realiza una prueba de rendimiento comparando la ejecución de una división y una multiplicación en un gran conjunto de datos..
+
+Dado un tamaño de tablero N × N, el programa encuentra todas las posibles soluciones al problema de N-Reinas, contando solo las soluciones únicas y eliminando las simétricas.
+
+El problema de las N-Reinas consiste en colocar N reinas en un tablero de ajedrez de 𝑁×𝑁
+sin que se ataquen entre sí. Es decir:
+
+No puede haber dos reinas en la misma fila.
+No puede haber dos reinas en la misma columna.
+No puede haber dos reinas en la misma diagonal.
+
+
+Tiene orden de c^{n} donde c es una constante.
