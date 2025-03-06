@@ -1,0 +1,76 @@
+a)i) Al eliminar las funciones, el tiempo de ejecucion es menor ya que no se esta
+utilizando tiempo en usar funciones (direccionamientos indirectos, condiciones, etc)
+Por ejemplo, con entrada n=16 el primer caso tarda 0.000076s y el segundo 0.000028s
+
+ ii) Tarda menos tiempo ya que suceden menos "miss" en memoria cache.
+ Usando el ejemplo anterior, tenemos 0.000028s en el primer caso y 0.000015s en el segundo
+
+ b) En el primer caso, con N bajon UN bucle es mejor, pero con un N mas grande, CUATRO bucles son
+mejores ya que, en el primer caso no hay tantas variables a almacenar por lo que no hay tantos fallos
+de cache al hacerlo en UN bucle, sin embargo, al aumentar N aumentan las variables por lo que si se hace en 
+UN bucle habran muchos errores de memorias, siendo mas eficiente hacer 4 bucles que usen menos variables cada uno
+
+En el segundo caso pasa lo contrario, al tener 4 matrices (no repetidas como en el caso anterior), UN bucle tarda mas que TRES
+bucles cuando N es bajo y viceversa cuando N es alto, ya que inicialmente es mas efiente almacenar
+menos variables en mas bucles ya que el hacerlo en uno solo genera bastantes fallos de memoria, sin embargo, al aumentar N
+se pierde la ventaja de los bucles con menos variables ya que, al aumentar significativamente el numero de las mismas,
+se generan mas errores de cache, haciendo que UN bucle sea mas eficiente (lidia con muchas variables de todas formas).
+
+El tercero es lo mismo amigo, fijate.
+
+
+c) Tarda mas el que da vuelta la matriz
+
+d) El código implementa la multiplicación de matrices cuadradas 
+𝑁
+×
+𝑁
+N×N utilizando la técnica de bloques de tamaño 
+𝐵
+𝑆
+×
+𝐵
+𝑆
+BS×BS para mejorar la localidad espacial y temporal en el acceso a memoria.
+
+Funcionamiento del algoritmo
+Almacenamiento en memoria
+
+Se usan matrices en formato unidimensional, con acceso por índices.
+A y B se inicializan en 1, mientras que C comienza en 0.
+Multiplicación por bloques (matmulblks)
+
+Se recorren las matrices en bloques de tamaño 
+𝐵
+𝑆
+×
+𝐵
+𝑆
+BS×BS.
+Se realizan tres bucles externos (I, J, K) para recorrer los bloques.
+Se utilizan tres bucles internos (i, j, k) para calcular la multiplicación dentro de cada bloque.
+
+En general, la versión por bloques es más rápida cuando se elige un 
+𝐵
+𝑆
+BS adecuado.
+
+Para valores pequeños de 
+𝑁
+N, la diferencia no es tan notoria, pero a medida que 
+𝑁
+N crece, la versión por bloques es significativamente más rápida debido a la mejor eficiencia de caché.
+La versión sin bloques realiza muchos accesos dispersos a memoria, mientras que la versión con bloques aprovecha la localidad espacial, reduciendo el número de accesos a RAM (lo más costoso en tiempo).
+
+En arquitecturas modernas, un 
+𝐵
+𝑆
+BS entre 16 y 64 suele ser óptimo.
+Si 
+𝐵
+𝑆
+BS es demasiado grande, se desperdicia caché y se pierde eficiencia.
+Si 
+𝐵
+𝑆
+BS es demasiado pequeño, el overhead de los bucles reduce la ventaja del método.
