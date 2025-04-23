@@ -8,7 +8,7 @@ void fProcesoTipoA(int N)
     MPI_Comm_rank(MPI_COMM_WORLD, &id);
     MPI_Comm_size(MPI_COMM_WORLD, &P);
 
-    int *V, *R;
+    int *V = NULL, *R = NULL;
     int *localR;
     int desde, hasta;
 
@@ -19,7 +19,6 @@ void fProcesoTipoA(int N)
     if (id == 0)
     {
         V = (int *)malloc(sizeof(int) * N);
-        R = (int *)malloc(sizeof(int) * N);
         for (int i = 0; i < N; i++)
         {
             V[i] = i;
@@ -58,17 +57,39 @@ void fProcesoTipoA(int N)
             localR[i - desde] = -1;
     }
 
+    // Preparar estructuras para Gatherv
+    int *recvcounts = NULL;
+    int *displs = NULL;
+
+    if (id == 0)
+    {
+        R = (int *)malloc(sizeof(int) * N);
+        recvcounts = (int *)malloc(sizeof(int) * P);
+        displs = (int *)malloc(sizeof(int) * P);
+
+        for (int i = 0; i < P; i++)
+        {
+            int d = i * (N / P);
+            int h = (i == P - 1) ? N : d + (N / P);
+            recvcounts[i] = h - d;
+            displs[i] = d;
+        }
+    }
+
     // Juntar todos los resultados en R
-    MPI_Gather(localR, hasta - desde, MPI_INT, R, hasta - desde, MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Gatherv(localR, hasta - desde, MPI_INT, R, recvcounts, displs, MPI_INT, 0, MPI_COMM_WORLD);
 
     if (id == 0)
     {
         free(R);
+        free(recvcounts);
+        free(displs);
     }
 
     free(V);
     free(localR);
 }
+
 
 double dwalltime()
 {
@@ -146,7 +167,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-
+        timetick = dwalltime();
         MPI_Init(&argc, &argv);
         int id;
         int cantidadDeProcesos;
@@ -154,7 +175,9 @@ int main(int argc, char *argv[])
         MPI_Comm_size(MPI_COMM_WORLD, &cantidadDeProcesos);
         fProcesoTipoA(N);
         MPI_Finalize();
-        printf("El tiempo de ejecucion paralelo es: %f\n", dwalltime());
+        printf("El tiempo de ejecucion paralelo es: %f\n", dwalltime() - timetick);
     }
     return (0);
 }
+//speedup: 1.833
+//efficiency: 0.611

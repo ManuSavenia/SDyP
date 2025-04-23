@@ -98,18 +98,18 @@ double dwalltime()
 
 int main(int argc, char *argv[])
 {
-    // Parametros: [numero procesos, texto, cantPalabras(N), modo(secuencial o paralelo)]
+    // Parametros: [texto, cantPalabras(N), modo(secuencial o paralelo)]
     //  Modo 0: secuencial
     //  Modo 1: paralelo
-    if (argc != 5)
+    if (argc != 4)
     {
         printf("Error en los argumentos\n");
         printf("Uso: %s <numero_procesos> <texto> <Npalabras> <modo>\n", argv[0]);
         return 1;
     }
 
-    int modo = atoi(argv[4]);
-    int N = atoi(argv[3]);
+    int modo = atoi(argv[3]);
+    int N = atoi(argv[2]);
     double timetick;
 
     if (N <= 0)
@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
     {
         timetick = dwalltime();
 
-        char *texto = argv[2];
+        char *texto = argv[1];
         int L = strlen(texto);
         int contadorPalabras[N];
         char palabras[N][50];
@@ -202,7 +202,7 @@ int main(int argc, char *argv[])
         int cantidadDeProcesos;
         MPI_Comm_rank(MPI_COMM_WORLD, &id);
         MPI_Comm_size(MPI_COMM_WORLD, &cantidadDeProcesos);
-        fProcesoTipoA(id, cantidadDeProcesos, N, argv[2]);
+        fProcesoTipoA(id, cantidadDeProcesos, N, argv[1]);
         MPI_Finalize();
         printf("Tiempo de ejecucion paralelo: %f segundos\n", dwalltime() - timetick);
     }

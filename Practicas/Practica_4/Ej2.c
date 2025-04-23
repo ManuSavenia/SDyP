@@ -181,3 +181,5 @@ int main(int argc, char *argv[])
     }
     return (0);
 }
+//speedup: 0.7468
+//efficiency: 0.1867

@@ -232,3 +232,8 @@ int main(int argc, char *argv[])
 
     return (0);
 }
+
+//speedup colectivo: 2.322
+//speedup punto a punto: 2.317
+//eficiencia colectiva: 0.5805
+//eficiencia punto a punto: 0.5792
